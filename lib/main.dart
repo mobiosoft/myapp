@@ -76,7 +76,7 @@ class MyBodyState extends State<MyBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
           Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold)),
         ],
       ),
@@ -96,7 +96,7 @@ class MyBodyState extends State<MyBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
           Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.green[500], fontWeight: FontWeight.bold)),
         ],
       ),

@@ -90,7 +90,8 @@ class MyBodyState extends State<MyBody> {
             //print("JSONEvent: $jstr");
             Event newEvent = Event.fromJSON(json.decode(rawEvent));
             setState(() {
-              events.add(newEvent);
+              //events.add(newEvent);
+              events.insert(0, newEvent);
             });
     });
   }

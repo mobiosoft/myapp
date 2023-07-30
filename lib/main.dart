@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:dio/dio.dart';
 
 void main() => runApp(
     MaterialApp(
@@ -37,6 +40,7 @@ class MyBody extends StatefulWidget {
 class MyBodyState extends State<MyBody> {
   //List data = [];
   List<Event> events = [];
+  //List<Event> newEvents = [];
 
   Future<String> getData() async {
     final response = await http.get(
@@ -60,9 +64,41 @@ class MyBodyState extends State<MyBody> {
     }
   }
 
+
+  subscribe2() async {
+    Response<ResponseBody> rs = await Dio().get<ResponseBody>(
+      "http://188.225.75.241/sse/events?user=user1@mobiosoft.com",
+      options: Options(headers: {
+        "Accept": "text/event-stream",
+        "Cache-Control": "no-cache",
+      }, responseType: ResponseType.stream), // set responseType to `stream`
+    );
+
+    StreamTransformer<Uint8List, List<int>> unit8Transformer =
+    StreamTransformer.fromHandlers(
+      handleData: (data, sink) {
+        sink.add(List<int>.from(data));
+      },
+    );
+
+    rs.data?.stream
+        .transform(unit8Transformer)
+        .transform(const Utf8Decoder())
+        .transform(const LineSplitter())
+        .listen((rawEvent) {
+            //Map<String, dynamic> jstr = json.decode(rawEvent);
+            //print("JSONEvent: $jstr");
+            Event newEvent = Event.fromJSON(json.decode(rawEvent));
+            setState(() {
+              events.add(newEvent);
+            });
+    });
+  }
+
   @override
   void initState(){
     getData();
+    subscribe2();
   }
 
   //Create item rows for ListView of new events

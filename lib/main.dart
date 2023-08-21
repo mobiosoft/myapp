@@ -64,7 +64,7 @@ class MyBodyState extends State<MyBody> {
     }
   }
 
-
+  //Get SSE events
   subscribe2() async {
     Response<ResponseBody> rs = await Dio().get<ResponseBody>(
       "http://188.225.75.241/sse/events?user=user1@mobiosoft.com",

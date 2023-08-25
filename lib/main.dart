@@ -44,7 +44,7 @@ class MyBodyState extends State<MyBody> {
 
   Future<String> getData() async {
     final response = await http.get(
-        Uri.parse("http://188.225.75.241/getmdata?user=user1@mobiosoft.com"),
+        Uri.parse("http://188.225.75.241/out/events?user=user1@mobiosoft.com"),
         headers: {
           "Accept": "application/json"
         }
@@ -54,8 +54,11 @@ class MyBodyState extends State<MyBody> {
       setState(() {
         if (response.body != '') {
           //data = json.decode(response.body);
-          events = (json.decode(response.body) as List).map((i) => Event.fromJSON(i)).toList();
+          final events2 = (json.decode(response.body) as List).map((i) => Event.fromJSON(i)).toList();
           //print(events[0].eventData);
+          //Sorting List of events
+          events = events2.map((event) => event).toList()
+            ..sort((a, b) => a.eventDateTime.compareTo(b.eventDateTime));
         }
       });
       return "Success!";
@@ -65,9 +68,9 @@ class MyBodyState extends State<MyBody> {
   }
 
   //Get SSE events
-  subscribe2() async {
+  subscribe() async {
     Response<ResponseBody> rs = await Dio().get<ResponseBody>(
-      "http://188.225.75.241/sse/events?user=user1@mobiosoft.com",
+      "http://188.225.75.241/out/autoevent?user=user1@mobiosoft.com",
       options: Options(headers: {
         "Accept": "text/event-stream",
         "Cache-Control": "no-cache",
@@ -92,6 +95,7 @@ class MyBodyState extends State<MyBody> {
             setState(() {
               //events.add(newEvent);
               events.insert(0, newEvent);
+              print(newEvent);
             });
     });
   }
@@ -99,7 +103,7 @@ class MyBodyState extends State<MyBody> {
   @override
   void initState(){
     getData();
-    subscribe2();
+    subscribe();
   }
 
   //Create item rows for ListView of new events
@@ -123,7 +127,7 @@ class MyBodyState extends State<MyBody> {
   );
 
   //Create item rows for ListView of new events
-  Widget _buildRowSD2(Event item) => Container(
+  Widget _buildRowFN1(Event item) => Container(
     decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
@@ -142,11 +146,33 @@ class MyBodyState extends State<MyBody> {
     ),
   );
 
+  //Create item rows for ListView of new events
+  Widget _buildRowSE1(Event item) => Container(
+    decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.grey))
+    ),
+    margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+    child: ListTile(
+      //tileColor: Colors.lightBlue,
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
+          SizedBox(width: 10),
+          Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.brown[500], fontWeight: FontWeight.bold)),
+        ],
+      ),
+      subtitle: Text(item.eventData['content'].toString()),
+      trailing: Text('>'),
+    ),
+  );
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: Text("Listviews"), backgroundColor: Colors.blue),
+      appBar: AppBar(title: Text("События"), backgroundColor: Colors.blue),
       body: ListView.builder(
+        reverse: true,
         itemCount: events == null ? 0 : events.length,
         itemBuilder: (BuildContext context, int index){
           /*return Card(
@@ -154,8 +180,10 @@ class MyBodyState extends State<MyBody> {
           );*/
           if (events[index].eventFormat == 'SD1') {
             return _buildRowSD1(events[index]);
-          } else if (events[index].eventFormat == 'SD2') {
-            return _buildRowSD2(events[index]);
+          } else if (events[index].eventFormat == 'FN1') {
+            return _buildRowFN1(events[index]);
+          } else if (events[index].eventFormat == 'SE1') {
+            return _buildRowSE1(events[index]);
           }
           else {
             return _buildRowSD1(events[index]);

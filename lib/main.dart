@@ -15,15 +15,17 @@ void main() => runApp(
 );
 
 class Event {
+  final String id;
   final String eventFormat;
   final String eventDateTime;
   final String eventTimeZone;
   final Map<String, dynamic> eventData;
 
-  Event(this.eventFormat, this.eventDateTime, this.eventTimeZone, this.eventData);
+  Event(this.id, this.eventFormat, this.eventDateTime, this.eventTimeZone, this.eventData);
 
   factory Event.fromJSON(dynamic dataJSON) {
     return Event(
+        dataJSON['ID'] as String,
         dataJSON['EventFormat'] as String,
         dataJSON['EventDateTime'] as String,
         dataJSON['EventTimeZone'] as String,
@@ -44,7 +46,7 @@ class MyBodyState extends State<MyBody> {
 
   Future<String> getData() async {
     final response = await http.get(
-        Uri.parse("http://188.225.75.241/out/events?user=user1@mobiosoft.com"),
+        Uri.parse("http://188.225.75.241/out/events?user=user3@mobiosoft.com"),
         headers: {
           "Accept": "application/json"
         }
@@ -55,7 +57,6 @@ class MyBodyState extends State<MyBody> {
         if (response.body != '') {
           //data = json.decode(response.body);
           final events2 = (json.decode(response.body) as List).map((i) => Event.fromJSON(i)).toList();
-          //print(events[0].eventData);
           //Sorting List of events
           events = events2.map((event) => event).toList()
             ..sort((a, b) => a.eventDateTime.compareTo(b.eventDateTime));
@@ -70,7 +71,7 @@ class MyBodyState extends State<MyBody> {
   //Get SSE events
   subscribe() async {
     Response<ResponseBody> rs = await Dio().get<ResponseBody>(
-      "http://188.225.75.241/out/autoevent?user=user1@mobiosoft.com",
+      "http://188.225.75.241/out/autoevent?user=user3@mobiosoft.com",
       options: Options(headers: {
         "Accept": "text/event-stream",
         "Cache-Control": "no-cache",
@@ -93,9 +94,10 @@ class MyBodyState extends State<MyBody> {
             //print("JSONEvent: $jstr");
             Event newEvent = Event.fromJSON(json.decode(rawEvent));
             setState(() {
-              //events.add(newEvent);
-              events.insert(0, newEvent);
-              print(newEvent);
+              //Add a new event to the EventList if EventList doesn't contain such an event id
+              if (events.any((listEvent) => listEvent.id == newEvent.id) == false) {
+                events.insert(0, newEvent);
+              }
             });
     });
   }
@@ -172,7 +174,7 @@ class MyBodyState extends State<MyBody> {
     return Scaffold(
       appBar: AppBar(title: Text("События"), backgroundColor: Colors.blue),
       body: ListView.builder(
-        reverse: true,
+        //reverse: true,
         itemCount: events == null ? 0 : events.length,
         itemBuilder: (BuildContext context, int index){
           /*return Card(

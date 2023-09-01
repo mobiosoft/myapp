@@ -120,11 +120,15 @@ class MyBodyState extends State<MyBody> {
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
           SizedBox(width: 10),
-          Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(item.eventData['name'].toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold))
+          ),
         ],
       ),
       subtitle: Text(item.eventData['content'].toString()),
-      trailing: Text('>'),
     ),
   );
 
@@ -140,11 +144,15 @@ class MyBodyState extends State<MyBody> {
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
           SizedBox(width: 10),
-          Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.green[500], fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(item.eventData['name'].toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.green[500], fontWeight: FontWeight.bold))
+            ),
         ],
       ),
       subtitle: Text(item.eventData['content'].toString()),
-      trailing: Text('>'),
     ),
   );
 
@@ -161,11 +169,15 @@ class MyBodyState extends State<MyBody> {
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
           SizedBox(width: 10),
-          Text(item.eventData['name'].toString(), style: TextStyle(color: Colors.brown[500], fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(item.eventData['name'].toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.brown[500], fontWeight: FontWeight.bold))
+          ),
         ],
       ),
       subtitle: Text(item.eventData['content'].toString()),
-      trailing: Text('>'),
     ),
   );
 

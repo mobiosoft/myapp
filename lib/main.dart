@@ -110,11 +110,79 @@ class MyBodyState extends State<MyBody> {
 
   //Create item rows for ListView of new events
   Widget _buildRowSD1(Event item) => Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
     margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
+      leading: CircleAvatar(child: Text(item.eventData['name'].toString()[0])),
+      title: Row(
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Column(
+                children: [
+                  Expanded(
+                    child: Text(item.eventData['name'].toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.blue[500], fontSize: 14, fontWeight: FontWeight.bold))
+                  ),
+                ]
+            ),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(item.eventDateTime.toString(),
+                      style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.normal))
+                ]
+            )
+          ]
+      ),
+      subtitle: Text(item.eventData['content'].toString()),
+    ),
+    /*child: Row(
+        children: [
+          const Column( //Image Column
+          ),
+          Column( //Text Column
+              children: [
+                Row(  //First Row
+                    children: [
+                      Column(
+                          children: [
+                            Text(item.eventData['name'].toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold))
+                          ]
+                      ),
+                      Column(
+                          children: [
+                            Text(item.eventDateTime.toString(),
+                                style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold))
+                          ]
+                      )
+                    ]
+                ),
+                Row(  //Second Row
+                    children: [
+                      Column(
+                          children: [
+                            Text(item.eventData['content'].toString(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.normal))
+                          ]
+                      ),
+                      const Column(
+                      )
+                    ]
+                )
+              ]
+          )
+        ]
+    )*/
+    /*child: ListTile(
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,12 +197,12 @@ class MyBodyState extends State<MyBody> {
         ],
       ),
       subtitle: Text(item.eventData['content'].toString()),
-    ),
+    ),*/
   );
 
   //Create item rows for ListView of new events
   Widget _buildRowFN1(Event item) => Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
     margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
@@ -143,7 +211,7 @@ class MyBodyState extends State<MyBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(item.eventData['name'].toString(),
                 maxLines: 1,
@@ -158,7 +226,7 @@ class MyBodyState extends State<MyBody> {
 
   //Create item rows for ListView of new events
   Widget _buildRowSE1(Event item) => Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
     margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
@@ -168,7 +236,7 @@ class MyBodyState extends State<MyBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(item.eventData['name'].toString(),
                 maxLines: 1,
@@ -184,7 +252,7 @@ class MyBodyState extends State<MyBody> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: Text("События"), backgroundColor: Colors.blue),
+      appBar: AppBar(title: const Text("События"), backgroundColor: Colors.blue),
       body: ListView.builder(
         //reverse: true,
         itemCount: events == null ? 0 : events.length,

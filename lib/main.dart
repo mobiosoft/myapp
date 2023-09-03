@@ -121,12 +121,13 @@ class MyBodyState extends State<MyBody> {
           children: [
             Column(
                 children: [
-                  Expanded(
-                    child: Text(item.eventData['name'].toString(),
+                  //Expanded(
+                    //child:
+                    Text(item.eventData['name'].toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.blue[500], fontSize: 14, fontWeight: FontWeight.bold))
-                  ),
+                 // ),
                 ]
             ),
             Column(

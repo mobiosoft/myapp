@@ -46,7 +46,7 @@ class MyBodyState extends State<MyBody> {
 
   Future<String> getData() async {
     final response = await http.get(
-        Uri.parse("http://188.225.75.241/out/events?user=user3@mobiosoft.com"),
+        Uri.parse("http://188.225.75.241/out/events?user=user1@mobiosoft.com"),
         headers: {
           "Accept": "application/json"
         }
@@ -71,7 +71,7 @@ class MyBodyState extends State<MyBody> {
   //Get SSE events
   subscribe() async {
     Response<ResponseBody> rs = await Dio().get<ResponseBody>(
-      "http://188.225.75.241/out/autoevent?user=user3@mobiosoft.com",
+      "http://188.225.75.241/out/autoevent?user=user1@mobiosoft.com",
       options: Options(headers: {
         "Accept": "text/event-stream",
         "Cache-Control": "no-cache",
@@ -117,21 +117,22 @@ class MyBodyState extends State<MyBody> {
     child: ListTile(
       leading: CircleAvatar(child: Text(item.eventData['name'].toString()[0])),
       title: Row(
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-                children: [
-                  //Expanded(
-                    //child:
-                    Text(item.eventData['name'].toString(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.blue[500], fontSize: 14, fontWeight: FontWeight.bold))
-                 // ),
-                ]
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                  Column(
+                    children: [
+                      Text(item.eventData['name'].toString(),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.blue[500], fontSize: 16, fontWeight: FontWeight.bold))
+                      ]
+                  ),
+              ),
             ),
             Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(item.eventDateTime.toString(),
                       style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.normal))
@@ -139,66 +140,35 @@ class MyBodyState extends State<MyBody> {
             )
           ]
       ),
-      subtitle: Text(item.eventData['content'].toString()),
-    ),
-    /*child: Row(
-        children: [
-          const Column( //Image Column
-          ),
-          Column( //Text Column
-              children: [
-                Row(  //First Row
+      subtitle:
+      Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                Column(
                     children: [
-                      Column(
-                          children: [
-                            Text(item.eventData['name'].toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold))
-                          ]
-                      ),
-                      Column(
-                          children: [
-                            Text(item.eventDateTime.toString(),
-                                style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold))
-                          ]
-                      )
+                      Text(item.eventData['content'].toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[600]))
                     ]
                 ),
-                Row(  //Second Row
-                    children: [
-                      Column(
-                          children: [
-                            Text(item.eventData['content'].toString(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.normal))
-                          ]
-                      ),
-                      const Column(
-                      )
-                    ]
-                )
-              ]
-          )
-        ]
-    )*/
-    /*child: ListTile(
-      title: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          SizedBox(width: 10),
-          Expanded(
-            child: Text(item.eventData['name'].toString(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.blue[500], fontWeight: FontWeight.bold))
-          ),
-        ],
+              ),
+            ),
+            const Column(
+                children: [
+                  Icon(
+                    Icons.access_alarms_rounded,
+                    color: Colors.black26
+                  )
+                ]
+            )
+          ]
       ),
-      subtitle: Text(item.eventData['content'].toString()),
-    ),*/
+    ),
   );
 
   //Create item rows for ListView of new events

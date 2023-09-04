@@ -115,6 +115,7 @@ class MyBodyState extends State<MyBody> {
     ),
     margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
+      visualDensity: const VisualDensity(vertical: -2),
       leading: CircleAvatar(child: Text(item.eventData['name'].toString()[0])),
       title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -108,15 +108,21 @@ class MyBodyState extends State<MyBody> {
     subscribe();
   }
 
-  //Create item rows for ListView of new events
+  //Create item rows for ListView of new events (Type = SD1)
   Widget _buildRowSD1(Event item) => Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
-    margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+    //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
-      visualDensity: const VisualDensity(vertical: -2),
-      leading: CircleAvatar(child: Text(item.eventData['name'].toString()[0])),
+      //isThreeLine: true,
+      dense: true,
+      //visualDensity: const VisualDensity(vertical: -2),
+      tileColor: Colors.grey[200],
+      leading: CircleAvatar(
+          backgroundColor: Colors.blue[400],
+          foregroundColor: Colors.white,
+          child: Text(item.eventData['name'].toString()[0])),
       title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -128,7 +134,7 @@ class MyBodyState extends State<MyBody> {
                     children: [
                       Text(item.eventData['name'].toString(),
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.blue[500], fontSize: 16, fontWeight: FontWeight.bold))
+                        style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
                       ]
                   ),
               ),
@@ -136,7 +142,7 @@ class MyBodyState extends State<MyBody> {
             Column(
                 children: [
                   Text(item.eventDateTime.toString(),
-                      style: TextStyle(color: Colors.grey[700], fontSize: 14, fontWeight: FontWeight.normal))
+                      style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
                 ]
             )
           ]
@@ -154,7 +160,76 @@ class MyBodyState extends State<MyBody> {
                       Text(item.eventData['content'].toString(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey[600]))
+                          style: TextStyle(color: Colors.grey[600], fontSize: 14))
+                    ]
+                ),
+              ),
+            ),
+            const Column(
+                children: [
+                  /*Icon(
+                    Icons.access_alarms_rounded,
+                    color: Colors.black26*
+                  )*/
+                ]
+            )
+          ]
+      ),
+    ),
+  );
+
+
+  //Create item rows for ListView of new events (Type = FN1)
+  Widget _buildRowFN1(Event item) => Container(
+    decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.grey))
+    ),
+    //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+    child: ListTile(
+      //isThreeLine: true,
+      //visualDensity: const VisualDensity(vertical: -2),
+      leading: CircleAvatar(
+          backgroundColor: Colors.green[400],
+          foregroundColor: Colors.white,
+          child: Text(item.eventData['name'].toString()[0])),
+      title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                Column(
+                    children: [
+                      Text(item.eventData['name'].toString(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                    ]
+                ),
+              ),
+            ),
+            Column(
+                children: [
+                  Text(item.eventDateTime.toString(),
+                      style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                ]
+            )
+          ]
+      ),
+      subtitle:
+      Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                Column(
+                    children: [
+                          Text(item.eventData['content'].toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[600], fontSize: 14))
                     ]
                 ),
               ),
@@ -162,8 +237,8 @@ class MyBodyState extends State<MyBody> {
             const Column(
                 children: [
                   Icon(
-                    Icons.access_alarms_rounded,
-                    color: Colors.black26
+                      Icons.access_alarms_rounded,
+                      color: Colors.black26
                   )
                 ]
             )
@@ -172,54 +247,74 @@ class MyBodyState extends State<MyBody> {
     ),
   );
 
-  //Create item rows for ListView of new events
-  Widget _buildRowFN1(Event item) => Container(
-    decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey))
-    ),
-    margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
-    child: ListTile(
-      title: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(item.eventData['name'].toString(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.green[500], fontWeight: FontWeight.bold))
-            ),
-        ],
-      ),
-      subtitle: Text(item.eventData['content'].toString()),
-    ),
-  );
 
-  //Create item rows for ListView of new events
+  //Create item rows for ListView of new events (Type = SE1)
   Widget _buildRowSE1(Event item) => Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
-    margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+    //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
-      //tileColor: Colors.lightBlue,
+      visualDensity: const VisualDensity(vertical: -2),
+      leading: CircleAvatar(
+          backgroundColor: Colors.brown[400],
+          foregroundColor: Colors.white,
+          child: Text(item.eventData['name'].toString()[0])),
       title: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(item.eventDateTime.toString(), style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(item.eventData['name'].toString(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.brown[500], fontWeight: FontWeight.bold))
-          ),
-        ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                Column(
+                    children: [
+                      Text(item.eventData['name'].toString(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                    ]
+                ),
+              ),
+            ),
+            Column(
+                children: [
+                  Text(item.eventDateTime.toString(),
+                      style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                ]
+            )
+          ]
       ),
-      subtitle: Text(item.eventData['content'].toString()),
+      subtitle:
+      Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child:
+                Column(
+                    children: [
+                          Text(item.eventData['content'].toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[600]))
+                    ]
+                ),
+              ),
+            ),
+            const Column(
+                children: [
+                  Icon(
+                      Icons.access_alarms_rounded,
+                      color: Colors.black26
+                  )
+                ]
+            )
+          ]
+      ),
     ),
   );
+
 
   @override
   Widget build(BuildContext context){

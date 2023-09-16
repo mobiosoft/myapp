@@ -19,9 +19,11 @@ class Event {
   final String eventFormat;
   final String eventDateTime;
   final String eventTimeZone;
+  final bool eventShowStatus;
+  final bool eventReadStatus;
   final Map<String, dynamic> eventData;
 
-  Event(this.id, this.eventFormat, this.eventDateTime, this.eventTimeZone, this.eventData);
+  Event(this.id, this.eventFormat, this.eventDateTime, this.eventTimeZone, this.eventShowStatus, this.eventReadStatus, this.eventData);
 
   factory Event.fromJSON(dynamic dataJSON) {
     return Event(
@@ -29,6 +31,8 @@ class Event {
         dataJSON['EventFormat'] as String,
         dataJSON['EventDateTime'] as String,
         dataJSON['EventTimeZone'] as String,
+        dataJSON['EventShowStatus'] as bool,
+        dataJSON['EventReadStatus'] as bool,
         dataJSON['EventData'] as Map<String, dynamic>
     );
   }
@@ -50,6 +54,12 @@ class MyBodyState extends State<MyBody> {
         headers: {
           "Accept": "application/json"
         }
+    ).timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        // Time has run out, do what you wanted to do.
+        return http.Response('Error', 408); // Request Timeout response status code
+      },
     );
 
     if ((response.statusCode == 200) || (response.statusCode == 201)) {
@@ -63,6 +73,8 @@ class MyBodyState extends State<MyBody> {
         }
       });
       return "Success!";
+    } else if (response.statusCode == 408) {
+      throw Exception('Истек таймаут выполнения запроса');
     } else {
         throw Exception('Ошибка загрузки данных');
     }
@@ -93,6 +105,8 @@ class MyBodyState extends State<MyBody> {
             //Map<String, dynamic> jstr = json.decode(rawEvent);
             //print("JSONEvent: $jstr");
             Event newEvent = Event.fromJSON(json.decode(rawEvent));
+            var showStatus = newEvent.eventShowStatus.toString();
+            print('Show status of new event: $showStatus');
             setState(() {
               //Add a new event to the EventList if EventList doesn't contain such an event id
               if (events.any((listEvent) => listEvent.id == newEvent.id) == false) {
@@ -117,8 +131,8 @@ class MyBodyState extends State<MyBody> {
     child: ListTile(
       //isThreeLine: true,
       dense: true,
-      //visualDensity: const VisualDensity(vertical: -2),
-      tileColor: Colors.grey[200],
+      visualDensity: const VisualDensity(vertical: 0),
+      tileColor: item.eventShowStatus ? Colors.white : Colors.grey[200],
       leading: CircleAvatar(
           backgroundColor: Colors.blue[400],
           foregroundColor: Colors.white,
@@ -157,6 +171,7 @@ class MyBodyState extends State<MyBody> {
                 child:
                 Column(
                     children: [
+                      //Text("Статус заказа: Доставка товара в пункт выдачи, который находится рядом с домом. Получение по коду доступа.",
                       Text(item.eventData['content'].toString(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -169,7 +184,7 @@ class MyBodyState extends State<MyBody> {
                 children: [
                   /*Icon(
                     Icons.access_alarms_rounded,
-                    color: Colors.black26*
+                    color: Colors.black26
                   )*/
                 ]
             )
@@ -186,8 +201,9 @@ class MyBodyState extends State<MyBody> {
     ),
     //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
-      //isThreeLine: true,
-      //visualDensity: const VisualDensity(vertical: -2),
+      dense: true,
+      visualDensity: const VisualDensity(vertical: 0),
+      tileColor: item.eventShowStatus ? Colors.white : Colors.grey[200],
       leading: CircleAvatar(
           backgroundColor: Colors.green[400],
           foregroundColor: Colors.white,
@@ -255,7 +271,9 @@ class MyBodyState extends State<MyBody> {
     ),
     //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
     child: ListTile(
-      visualDensity: const VisualDensity(vertical: -2),
+      dense: true,
+      visualDensity: const VisualDensity(vertical: 0),
+      tileColor: item.eventShowStatus ? Colors.white : Colors.grey[200],
       leading: CircleAvatar(
           backgroundColor: Colors.brown[400],
           foregroundColor: Colors.white,
@@ -297,7 +315,7 @@ class MyBodyState extends State<MyBody> {
                           Text(item.eventData['content'].toString(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey[600]))
+                          style: TextStyle(color: Colors.grey[600], fontSize: 14))
                     ]
                 ),
               ),
@@ -327,6 +345,12 @@ class MyBodyState extends State<MyBody> {
           /*return Card(
             child: Text(events[index].eventData.toString()),
           );*/
+
+          //var showStatus = events[index].eventShowStatus.toString();
+          //print('Show status: $showStatus');
+          //var readStatus = events[index].eventReadStatus.toString();
+          //print('Read status: $readStatus');
+
           if (events[index].eventFormat == 'SD1') {
             return _buildRowSD1(events[index]);
           } else if (events[index].eventFormat == 'FN1') {

@@ -124,6 +124,103 @@ class MyBodyState extends State<MyBody> {
 
   //Create item rows for ListView of new events (Type = SD1)
   Widget _buildRowSD1(Event item) => Container(
+    decoration: BoxDecoration(
+        color: item.eventShowStatus ? Colors.white : Colors.grey[200],
+        border: const Border(bottom: BorderSide(color: Colors.black12))
+    ),
+    child: SizedBox(
+        height: 65,
+        child:
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 1,
+                child:
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                          backgroundColor: Colors.blue[400],
+                          foregroundColor: Colors.white,
+                          radius: 24,
+                          child: Text(item.eventData['name'].toString()[0]))
+                    ]),
+              ),
+              Expanded(
+                  flex: 4,
+                  child:
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0, bottom: 2.0),
+                                    child:
+                                    Text(item.eventData['name'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                                ),
+                              ),
+                              Column(
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.only(right: 10.0, bottom: 2.0),
+                                        child:
+                                        Text(item.eventDateTime.toString(),
+                                            style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                                    )
+                                  ]
+                              )
+                            ]
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child:
+                                  Column(
+                                      children: [
+                                        //Text("Статус заказа: Доставка товара в пункт выдачи, который находится рядом с домом. Получение по коду доступа.",
+                                        Text(item.eventData['content'].toString(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(color: Colors.grey[600], fontSize: 14))
+                                      ]
+                                  ),
+                                ),
+                              ),
+                              const Column(
+                                  children: [
+                                    /*Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child:
+                                              Icon(
+                                                Icons.access_alarms_rounded,
+                                                color: Colors.black26
+                                              )
+                                        )*/
+                                  ]
+                              )
+                            ]
+                        ),
+                      ]
+                  )
+              )
+            ]
+        )
+    )
+  );
+
+
+  //Create item rows for ListView of new events (Type = SD1)
+  /*Widget _buildRowSD1(Event item) => Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey))
     ),
@@ -191,86 +288,201 @@ class MyBodyState extends State<MyBody> {
           ]
       ),
     ),
-  );
+  );*/
 
 
   //Create item rows for ListView of new events (Type = FN1)
   Widget _buildRowFN1(Event item) => Container(
-    decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey))
+    decoration: BoxDecoration(
+        color: item.eventShowStatus ? Colors.white : Colors.grey[200],
+        border: const Border(bottom: BorderSide(color: Colors.black12))
     ),
-    //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
-    child: ListTile(
-      dense: true,
-      visualDensity: const VisualDensity(vertical: 0),
-      tileColor: item.eventShowStatus ? Colors.white : Colors.grey[200],
-      leading: CircleAvatar(
-          backgroundColor: Colors.green[400],
-          foregroundColor: Colors.white,
-          child: Text(item.eventData['name'].toString()[0])),
-      title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+    child: SizedBox(
+        height: 65,
+        child:
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 1,
                 child:
                 Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(item.eventData['name'].toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
-                    ]
-                ),
+                      CircleAvatar(
+                          backgroundColor: Colors.green[400],
+                          foregroundColor: Colors.white,
+                          radius: 24,
+                          child: Text(item.eventData['name'].toString()[0]))
+                    ]),
               ),
-            ),
-            Column(
-                children: [
-                  Text(item.eventDateTime.toString(),
-                      style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
-                ]
-            )
-          ]
-      ),
-      subtitle:
-      Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child:
-                Column(
-                    children: [
-                          Text(item.eventData['content'].toString(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey[600], fontSize: 14))
-                    ]
-                ),
-              ),
-            ),
-            const Column(
-                children: [
-                  Icon(
-                      Icons.access_alarms_rounded,
-                      color: Colors.black26
+              Expanded(
+                  flex: 4,
+                  child:
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0, bottom: 2.0),
+                                    child:
+                                    Text(item.eventData['name'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                                ),
+                              ),
+                              Column(
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.only(right: 10.0, bottom: 2.0),
+                                        child:
+                                        Text(item.eventDateTime.toString(),
+                                            style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                                    )
+                                  ]
+                              )
+                            ]
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child:
+                                  Column(
+                                      children: [
+                                        Text(item.eventData['content'].toString(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(color: Colors.grey[600], fontSize: 14))
+                                      ]
+                                  ),
+                                ),
+                              ),
+                              const Column(
+                                  children: [
+                                    Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child:
+                                              Icon(
+                                                Icons.access_alarms_rounded,
+                                                color: Colors.black26
+                                              )
+                                        )
+                                  ]
+                              )
+                            ]
+                        ),
+                      ]
                   )
-                ]
-            )
-          ]
-      ),
-    ),
+              )
+            ]
+        )
+    )
   );
 
 
   //Create item rows for ListView of new events (Type = SE1)
   Widget _buildRowSE1(Event item) => Container(
-    decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey))
+    decoration: BoxDecoration(
+        color: item.eventShowStatus ? Colors.white : Colors.grey[200],
+        border: const Border(bottom: BorderSide(color: Colors.black12))
     ),
-    //margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
-    child: ListTile(
+    child: SizedBox(
+        height: 65,
+        child:
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 1,
+                child:
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                          backgroundColor: Colors.brown[400],
+                          foregroundColor: Colors.white,
+                          radius: 24,
+                          child: Text(item.eventData['name'].toString()[0]))
+                    ]),
+              ),
+              Expanded(
+                  flex: 4,
+                  child:
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0, bottom: 2.0),
+                                    child:
+                                    Text(item.eventData['name'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                                ),
+                              ),
+                              Column(
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.only(right: 10.0, bottom: 2.0),
+                                        child:
+                                        Text(item.eventDateTime.toString(),
+                                            style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                                    )
+                                  ]
+                              )
+                            ]
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child:
+                                  Column(
+                                      children: [
+                                        Text(item.eventData['content'].toString(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(color: Colors.grey[600], fontSize: 14))
+                                      ]
+                                  ),
+                                ),
+                              ),
+                              const Column(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child:
+                                        Icon(
+                                            Icons.access_alarms_rounded,
+                                            color: Colors.black26
+                                        )
+                                    )
+                                  ]
+                              )
+                            ]
+                        ),
+                      ]
+                  )
+              )
+            ]
+        )
+    )
+
+
+    /*ListTile(
       dense: true,
       visualDensity: const VisualDensity(vertical: 0),
       tileColor: item.eventShowStatus ? Colors.white : Colors.grey[200],
@@ -330,7 +542,7 @@ class MyBodyState extends State<MyBody> {
             )
           ]
       ),
-    ),
+    ),*/
   );
 
 
@@ -338,8 +550,99 @@ class MyBodyState extends State<MyBody> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: const Text("События"), backgroundColor: Colors.blue),
-      body: ListView.builder(
+      body:
+
+      /*SizedBox(
+        height: 65,
+        child:
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                  Expanded(
+                      flex: 1,
+                      child:
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                                backgroundColor: Colors.blue[400],
+                                foregroundColor: Colors.white,
+                                radius: 24,
+                                child: Text("З"))
+                            ]),
+                  ),
+                  Expanded(
+                      flex: 5,
+                      child:
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child:
+                                        Text("Заказ 100000",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(color: Colors.grey[700], fontSize: 16, fontWeight: FontWeight.bold))
+                                    ),
+                                  ),
+                                  Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.only(right: 10.0),
+                                            child:
+                                            Text("2023-09-16 10:00",
+                                                style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.normal))
+                                        )
+                                      ]
+                                  )
+                                ]
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child:
+                                      Column(
+                                          children: [
+                                            //Text("Статус заказа: Доставка товара в пункт выдачи, который находится рядом с домом. Получение по коду доступа.",
+                                            Text("Статус заказа: Доставка товара в пункт выдачи, который находится рядом с домом. Получение по коду доступа.",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(color: Colors.grey[600], fontSize: 14))
+                                          ]
+                                      ),
+                                    ),
+                                  ),
+                                  const Column(
+                                      children: [
+                                        /*Padding(
+                                            padding: EdgeInsets.only(right: 10.0),
+                                            child:
+                                              Icon(
+                                                Icons.access_alarms_rounded,
+                                                color: Colors.black26
+                                              )
+                                        )*/
+                                      ]
+                                  )
+                                ]
+                            ),
+                          ]
+                      )
+                  )
+              ]
+        )
+      )*/
+
+      ListView.builder(
         //reverse: true,
+        //shrinkWrap: true,
         itemCount: events == null ? 0 : events.length,
         itemBuilder: (BuildContext context, int index){
           /*return Card(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:myapp/drawer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -47,6 +48,7 @@ class MyBodyState extends State<MyBody> {
   //List data = [];
   List<Event> events = [];
   //List<Event> newEvents = [];
+  int countEvents = 10;
 
   Future<String> getData() async {
     final response = await http.get(
@@ -550,6 +552,7 @@ class MyBodyState extends State<MyBody> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: const Text("События"), backgroundColor: Colors.blue),
+      drawer: NavBar(countEvents),
       body:
 
       /*SizedBox(

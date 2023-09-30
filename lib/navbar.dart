@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
 
-  NavBar(int ce);
-
   @override
   Widget build(BuildContext context) {
     return Drawer(

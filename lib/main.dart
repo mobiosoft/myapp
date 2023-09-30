@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:myapp/drawer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
+
+import 'package:myapp/navbar.dart';
+import './screens/events.dart';
 
 void main() => runApp(
     MaterialApp(
@@ -552,7 +554,7 @@ class MyBodyState extends State<MyBody> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: const Text("События"), backgroundColor: Colors.blue),
-      drawer: NavBar(countEvents),
+      drawer: NavBar(),
       body:
 
       /*SizedBox(
